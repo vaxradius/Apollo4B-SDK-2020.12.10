@@ -1,0 +1,328 @@
+
+********************************************************************************************
+
+Apollo4 Rev B0 Alpha Release on December 10 2020 (revision b0-release-20201110-399-g4728b5a52)
+
+********************************************************************************************
+
+-----------------------------------
+New Features Since Previous Release
+-----------------------------------
+\third_party\crypto
+*    Run-time Crypto HW support.
+
+------------------------------------------------
+Software Known Issues, Updates, and Defect Fixes
+------------------------------------------------
+\mcu\apollo4b\hal\mcu\am_hal_card.*
+\mcu\apollo4b\hal\mcu\am_hal_sdhc.*
+\mcu\apollo4b\hal\mcu\am_hal_card_host.*
+*    Added the DDR50 and read ext_csd SW workaround.
+    
+\mcu\apollo4b\hal\mcu\am_hal_iom.*
+*    Updated to support the full 5-byte OFFSET (CMD and OFFSETHI registers).
+
+\devices\am_devices_cooper.c
+*    Updated to use the IOM HAL changes.
+
+\mcu\apollo4b\hal\mcu\am_hal_dsi.c
+*    Updated DSI timing configurations.
+*    Fine tune DSI timing.
+
+\mcu\apollo4b\hal\am_hal_gpio.*
+*    Condition the drive strength pin table with AM_HAL_DISABLE_API_VALIDATION.
+*    Add new GPIO function, am_hal_gpio_pinconfig_get(), for both 4 and 4b.
+*    For Apollo4 and Apollo4b, convert drive strength designations from
+     "12MA"/"16MA" to the more accurate designations "0P1X"/"0P5X".
+     Also support new RevB drive strengths of "0P75X" and "1P0X".
+     Finally, deprecate 12MA and 16MA, but support any existing usage with
+     defines that equate to the new enums.
+
+\mcu\apollo4b\hal\am_hal_pwrctrl.c
+*    Updated PWRCTRL HAL for CRYPTO power-down/power-up SW workaround.
+
+\mcu\apollo4b\hal\mcu\am_hal_utils.c
+*    Updated am_hal_delay_us function to support both LP96MHz and HP192MHz test.
+
+********************************************************************************************
+
+Apollo4 Rev B0 Alpha Release on December 4 2020 (revision b0-release-20201110-315-gc8341de26)
+
+********************************************************************************************
+
+-----------------------------------
+New Features Since Previous Release
+-----------------------------------
+SW RTC using STIMER
+*    See \devices\am_devices_sw_rtc.* and \boards\apollo4b_eb\examples\peripherals\sw_rtc_print example.
+
+OEM Provisioning Tools
+*    See \tools\apollo4b_scripts\oem_tools_pkg
+
+Secure Updates
+*    See \tools\apollo4b_scripts
+
+------------------------------------------------
+Software Known Issues, Updates, and Defect Fixes
+------------------------------------------------
+
+\devices\am_devices_mspi_psram_aps12808l.c
+*    minor fix to defect in printf.
+*    Clean up MSPI DDR code. Add dedicated CE pin for DDR. Change to linear burst mode for DDR read write.
+*    Trivial change to display APS12808L read latency code.
+
+\devices\am_devices_cooper.c
+*    Disable the modem's DCOC block to eliminate the 2M PER spike issue completely, and reverted previous software AGC solution;
+*    Code cleanup and fixed some compiling warnings.
+
+\devices\am_devices_dsi_rm67162.*
+*    Modified default DBI bus width to 16, updated graphics examples.
+*    Fixed wrong color issue when using at DSI RGB565 mode.
+*    Updated DSI driver to fix DSI r/w issue.
+
+\mcu\apollo4b\hal\am_hal_dcu.c
+*    Defect fix in get_raw_dcu_mask function
+
+\mcu\apollo4b\hal\am_hal_gpio.*
+*    Added API validation to am_hal_gpio_pinconfig.
+*    Added am_hal_gpio_intdir_toggle macro.
+
+\mcu\apollo4b\hal\am_hal_i2s.*
+*    Added interfaces to I2S HAL: am_hal_i2s_disable, am_hal_i2s_tx_fifo_empty, am_hal_i2s_dma_error.
+*    Adjusted clock enable settings.
+
+\mcu\apollo4b\hal\am_hal_pdm.*
+*    revised pdm hal enable bit handling
+*    revised pdma_clkodiv enumerate to reflect datasheet
+
+\mcu\apollo4b\hal\am_hal_pwrctrl.c
+*    Added support for transition to High Performance mode and back to Low Power mode.
+
+\mcu\apollo4\hal\am_hal_stimer.*
+*     Add changes to STIMER HAL to support SW RTC feature.
+
+\mcu\apollo4b\hal\am_hal_usb.c
+*    add the 'am_hal_usb_xfer_reset(&pState->ep0_xfer)' back
+*    added support for the USB charger feature
+*    add suspend & resume PHY power saving code
+
+\mcu\apollo4b\hal\mcu\am_hal_card.c
+*    Add CMD56 support.
+*    Added check if mode switch is successful or not.
+*    Add two APIs for eMMC HAL.
+*    Fixed API VALIDATION.
+
+\mcu\apollo4b\hal\mcu\am_hal_clkgen.c
+*     Updates to support HFADJ for Rev B.
+
+\mcu\apollo4b\hal\mcu\am_hal_dsi.c
+*    Updated DSI ULPS functions.
+*    Ported the changes in apollo4 dsi hal to apollo4b dsi hal.
+*    Modified 16-bit DBI config to opt1.
+
+\mcu\apollo4b\hal\mcu\am_hal_ios.*
+*    IOS REGACC related control code enabled for wraparound support.
+*    Updated am_hal_ios_control function options for interrupt settings.
+
+\mcu\apollo4b\hal\mcu\am_hal_mram.c
+*    Implementation of INFO read/write SW workaround.
+
+\mcu\apollo4b\hal\mcu\am_hal_mspi.c
+*    Fixed issue with missing register save/restore in am_hal_mspi_power_control for DEV0DDR & DEV0XIPMISC.
+
+\mcu\apollo4b\hal\mcu\am_hal_reset.*
+*    Update reset get HAL to remove dependency from the RTSGET->STAT register.
+
+\mcu\apollo4b\hal\mcu\am_hal_sdhc.c
+*    Added cmd and data software reset
+
+\third_party\tinyusb\src\portable\ambiq\apollo4\dcd_apollo4.c
+*    added the USB charger and USB HAL changes
+
+********************************************************************************************
+
+Apollo4 Rev B0 Alpha Release on November 10 2020 (revision v2.5.1_apollo4_a2-441-g90f6eda25)
+
+********************************************************************************************
+
+-----------------------------------
+New Features Since Previous Release
+-----------------------------------
+
+CPU
+* 192MHz High Performance operation.
+
+I2S
+* Support for 2 instances IIS channels.
+
+MSPI
+* Updated support for DDR operation.
+
+SD/SDIO/eMMC
+* Support of new block with Arasan's Nex Host stack.
+
+Security Features
+* Including ARM Cryptocell HW acceleration.
+
+\mcu\apollo4b\hal\am_hal_dcu.c
+\mcu\apollo4b\hal\am_hal_dcu.h
+* New HAL to allow configuration of the Debug Control Unit (DCU).
+
+
+------------------------------------------------
+Software Known Issues, Updates, and Defect Fixes
+------------------------------------------------
+
+\devices\am_devices_cooper.c
+* Add support to production Cooper SBL
+* Support for version rollback enable feature.
+* Some additional error handling in FW update flow.
+* Updated to Cooper FW V1.10.0
+    1.	Fixed an issue of not generating signal for FCC's "Continuous Wave" test;
+    2.	Lowered PLL bandwidth and adjusted register setting for 0dBm transmit power to improve DTM DF2 99.9%.
+* Changes included from Cooper FW V1.9.0
+    1.	Introduced production Cooper SBL;
+    2.	Added VSC command to get 32K clock frequency;
+    3.	Added info0 field to protect Cooper memory/register write;
+    4.	Enabled AGC and adjusted parameters to fix the -75dBm spike issue and optimize the RX sensitivity;
+    5.	Corrected wrong SLEEPEMCR definitions.
+
+\devices\am_devices_dsi_rm67162.c
+* Fixed a bug with driver error return in the am_devices_dsi_rm67162_init function.
+
+\devices\am_devices_nemadc_rm67162.c
+* Moved display configurations to BSP, modified macros RESX and RESY to FB_RESX and FB_RESY.
+
+\devices\am_devices_mspi_psram_aps12808l.c
+* Support for MSPI DDR testing on FPGA and Rev B0 silicon.
+
+\mcu\apollo4b\hal\mcu\am_hal_clkgen.c
+* Deprecated RSTGEN->STATUS usage which is handled by the SBR/SBL.
+
+\mcu\apollo4b\hal\mcu\am_hal_dsi.c
+\mcu\apollo4b\hal\mcu\am_hal_dsi.h
+* Modified 16-bit DBI config to OPT1.
+* Added DSI clock lane and DBI data width configuration.
+
+\mcu\apollo4b\hal\mcu\am_hal_iom.h
+* Set maximum IOM clock speed to 48MHz.
+
+\mcu\apollo4b\hal\mcu\am_hal_ios.c
+\mcu\apollo4b\hal\mcu\am_hal_ios.h
+* Updated for new WRAPPTR configuration.
+
+\mcu\apollo4b\hal\mcu\am_hal_mcuctrl.c
+\mcu\apollo4b\hal\mcu\am_hal_mcuctrl.h
+* Correct the setting to generate 32768 clock in am_hal_mcuctrl_control function.
+* Updated macros to distinguish Rev A and B0.
+* Removed code to distinguish between Rev A0 and A1 parts.
+
+\mcu\apollo4b\hal\mcu\am_hal_mram.c
+\mcu\apollo4b\hal\mcu\am_hal_mram.h
+* SW workaround for INFO0/1 Read/Write issue with Rev B0.
+* Defines new am_hal_mram_info_read function.
+
+\mcu\apollo4b\hal\mcu\am_hal_mspi.c
+\mcu\apollo4b\hal\mcu\am_hal_mspi.h
+* Updated the PADOUTEN definitions for the OCTAL device configurations.
+* Added support to configure the MSPI0_DEV0XIP_XIPWRITELATENCY0 register.
+* Added support for misc. configuration (AM_HAL_MSPI_REQ_XIP_MISC_CONFIG) in am_hal_mspi_control function.
+
+\mcu\apollo4b\hal\am_hal_otp.c
+* Added error checking in am_hal_otp_read_word and am_hal_otp_write_word functions.
+
+\mcu\apollo4b\hal\am_hal_pdm.c
+\mcu\apollo4b\hal\am_hal_pdm.h
+* Register configuration changes to support Rev B0.
+* Adjusted PDM clock parameters for Rev B0.
+
+\mcu\apollo4b\hal\mcu\am_hal_reset.c
+\mcu\apollo4b\hal\mcu\am_hal_reset.h
+* Deprecated clearing of RSTGEN->STATUS which is handled by SBR/SBL.
+
+\mcu\apollo4b\hal\mcu\am_hal_secure_ota.h
+* Updates the interface for new "magic" numbers and status values.
+
+\mcu\apollo4b\hal\am_hal_security.c
+\mcu\apollo4b\hal\am_hal_security.h
+* Expanded am_hal_security_info_t for Rev B0.
+*  Added get_socid function.
+
+\mcu\apollo4b\hal\am_hal_usb.c
+\mcu\apollo4b\hal\am_hal_usb.h
+* Removal of the USB 4-byte SW workaround for Rev A.
+* Incorporated changes from Alpha customer feedback.
+* Fixed an issue with improper handling of EP0 transfer reset.
+* Deprecated configuration of number of DMA channels.
+
+\mcu\apollo4b\regs\am_mcu_apollo4b_info0.h
+* Updates to reflect the latest INFO0 changes.
+
+\mcu\apollo4b\regs\am_mcu_apollo4b_otp.h
+* Updates to reflect the latest OTP memory definitions.
+
+\third_party\cordio\ble-host\cordio_stack_readme.md and third_party\cordio\ble-profiles\cordio_profile_readme.md
+* Update the information for Open source Cordio stack and profile on which Ambiqsuite is based; 
+
+\third_party\cordio\ble-profiles\sources\apps\app\app_master.c
+* Fix BLESA vulenarability when device working as master role. (refer to https://www.zdnet.com/article/billions-of-devices-vulnerable-to-new-blesa-bluetooth-security-flaw/)
+
+\third_party\cordio\ble-host\sources\hci\ambiq\cooper\ble_fw_image.h
+* integrate Cooper firmware v1.10 for Apollo4 RevA and RevB; 
+
+\third_party\cordio\ble-host\sources\hci\ambiq\cooper\hci_drv_cooper.c
+\third_party\cordio\ble-host\sources\hci\ambiq\cooper\hci_drv_cooper.h
+* Deprecated HciVscBleSleepSet command. Not needed anymore, since Cooper fw v1.8 or later 
+will disable sleep automatically when entering radio test mode (DTM, FCC); 
+* Set transmit test data length to 0x25 by default for DTM TX test cases.
+* Change DTM transmitter and receiver testing V3 command APIs to expose all parameters.
+* Remove Bluetooth address field from NVDS parameters.
+* Correct wrong command structure of hciWrFlashCmd_t; 
+* Add 32k source setting to NVDS parameter; 
+
+\third_party\cordio\ble-host\sources\stack\dm\dm_dev.c
+* Clear dmCb.resetting flag before acting resetting if previous reset still in progress; 
+
+\third_party\cordio\ble-host\sources\stack\smp\smp_main.c
+* Fix 0xE1 SMP error when AES token mismatches.
+
+\ third_party\cordio\ble-host\sources\stack\smp\smp_sc_act.c
+* Fix the issue where LE secure connection is not authentically established when there's no IO CAP on either side.
+
+---------------
+Known Sightings
+---------------
+
+These are issues to watch out for on the early Rev B0 samples.
+
+GPU
+* The GPU hangs while processing a Command List executing in Shared SRAM.
+* Image artifacts (zigzag/sawteeth) appear on object boarders.
+
+DSI
+* Image artifacts are observed when using the DSI interface to a display.
+
+IOM
+* STATUS register does not return to IDLEST after a blocking I2C transaction.
+
+MRAM
+* INFOspace (0/1) reads and writes do not work correctly.  SW workaround included in SDK.
+
+MSPI
+* Transactions fail at clock speeds above 16MHz.
+* DDR does not function on MSPI instance 2.
+
+IIS
+* Receive DMA duplicates samples in SRAM
+
+IOS
+* Data loss at CLK frequencies above 1MHz.
+
+
+
+
+
+
+
+
+

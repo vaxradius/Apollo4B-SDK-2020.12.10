@@ -1,0 +1,2 @@
+# ImageName	RAMloadAdd	  flashStoreAdd Maxsize    enc-Scheme	WriteProtect	CopyProtect	ExtendedFormat
+./inputData/hello_world_0x18000_chip_enable_debugger.bin 0x00018000 0xFFFFFFFF 0x000023DC 0x0 0x0 0x0 0x0
